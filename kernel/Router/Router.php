@@ -2,7 +2,6 @@
 
 namespace Kernel\Router;
 
-use Kernel\Model\Model;
 use Kernel\Http\Request;
 use Kernel\View\View;
 
@@ -14,7 +13,6 @@ class Router
 	];
 
 	public function __construct(
-		private Model   $database,
 		private Request $request,
 		private View    $view
 	)
@@ -32,7 +30,6 @@ class Router
 		if(is_array($route->getAction())) {
 			[$controller, $actionMethod] = $route->getAction();
 			$controller = new $controller;
-			call_user_func([$controller, 'setDatabase'], $this->database);
 			call_user_func([$controller, 'setRequest'], $this->request);
 			call_user_func([$controller, 'setView'], $this->view);
 			call_user_func([$controller, $actionMethod]);

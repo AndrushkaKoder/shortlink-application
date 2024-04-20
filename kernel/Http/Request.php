@@ -35,6 +35,16 @@ class Request
 		return $this->get[$value] ?? $this->post[$value] ?? null;
 	}
 
+	public function get(): array
+	{
+		return $this->get;
+	}
+
+	public function post(): array
+	{
+		return $this->post;
+	}
+
 	public function all(): array
 	{
 		return array_merge($this->get, $this->post);
