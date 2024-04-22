@@ -17,3 +17,8 @@ function dotNotation(string $path): string
 {
 	return str_replace('.', '/', $path) . '.php';
 }
+
+function hashPassword(string $password): string
+{
+	return password_hash($password, PASSWORD_DEFAULT);
+}

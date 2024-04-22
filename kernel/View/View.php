@@ -2,10 +2,20 @@
 
 namespace Kernel\View;
 
+use Kernel\Auth\Auth;
 use Kernel\Exceptions\ViewNotFoundException;
+use Kernel\Session\Session;
 
 class View
 {
+
+	public function __construct(
+		public Session $session,
+		public Auth $auth
+	)
+	{
+	}
+
 	public function page(string $path, array $data = []): void
 	{
 		$viewFile = VIEWS . '/' . dotNotation($path);
@@ -29,7 +39,6 @@ class View
 			include $component;
 		} else {
 			echo "Component {$pathToComponent} not found!";
-			return;
 		}
 	}
 
@@ -37,8 +46,8 @@ class View
 	{
 		return [
 			'view' => $this,
-			'session' => 'session',
-			'auth' => 'auth'
+			'session' => $this->session,
+			'auth' => $this->auth
 		];
 	}
 }

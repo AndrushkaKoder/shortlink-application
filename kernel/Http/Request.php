@@ -35,14 +35,14 @@ class Request
 		return $this->get[$value] ?? $this->post[$value] ?? null;
 	}
 
-	public function get(): array
+	public function get($key): mixed
 	{
-		return $this->get;
+		return !$key ? $this->get : $this->get[$key];
 	}
 
-	public function post(): array
+	public function post(string $key = ''): mixed
 	{
-		return $this->post;
+		return !$key ? $this->post : $this->post[$key];
 	}
 
 	public function all(): array

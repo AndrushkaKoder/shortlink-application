@@ -2,7 +2,10 @@
 
 namespace Kernel\Router;
 
+use Kernel\Auth\Auth;
+use Kernel\Http\Redirect;
 use Kernel\Http\Request;
+use Kernel\Session\Session;
 use Kernel\View\View;
 
 class Router
@@ -14,7 +17,10 @@ class Router
 
 	public function __construct(
 		private Request $request,
-		private View    $view
+		private View    $view,
+		private Redirect $redirect,
+		private Session $session,
+		private Auth $auth,
 	)
 	{
 		$this->initRoutes();
@@ -27,11 +33,21 @@ class Router
 			exit(include VIEWS . '/404/404.php');
 		}
 
+		if ($route->hasMiddlewares()) {
+			foreach ($route->getMiddlewares() as $middleware) {
+				$middleware = new $middleware($this->redirect, $this->request, $this->auth);
+				$middleware->handle();
+			}
+		}
+
 		if(is_array($route->getAction())) {
 			[$controller, $actionMethod] = $route->getAction();
 			$controller = new $controller;
 			call_user_func([$controller, 'setRequest'], $this->request);
+			call_user_func([$controller, 'setSession'], $this->session);
 			call_user_func([$controller, 'setView'], $this->view);
+			call_user_func([$controller, 'setRedirect'], $this->redirect);
+			call_user_func([$controller, 'setAuth'], $this->auth);
 			call_user_func([$controller, $actionMethod]);
 		} else {
 			call_user_func($route->getAction());

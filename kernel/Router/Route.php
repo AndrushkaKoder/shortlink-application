@@ -38,9 +38,14 @@ class Route
 		return $this->method;
 	}
 
-	public function getMiddleware(): array
+	public function getMiddlewares(): array
 	{
 		return $this->middleware;
+	}
+
+	public function hasMiddlewares(): bool
+	{
+		return (bool)$this->middleware;
 	}
 
 }
