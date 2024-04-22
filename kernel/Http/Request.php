@@ -17,7 +17,13 @@ class Request
 
 	public static function createFromGlobals(): static
 	{
-		return new static($_GET, $_POST, $_SERVER, $_COOKIE, $_FILES);
+		return new static(
+			self::clearFields($_GET),
+			self::clearFields($_POST),
+			$_SERVER,
+			$_COOKIE,
+			self::clearFields($_FILES)
+		);
 	}
 
 	public function uri(): string
@@ -50,4 +56,11 @@ class Request
 		return array_merge($this->get, $this->post);
 	}
 
+	private static function clearFields(array $array): array
+	{
+		foreach ($array as $key => $value) {
+			$array[$key] = htmlspecialchars($value, ENT_QUOTES);
+		}
+		return $array;
+	}
 }

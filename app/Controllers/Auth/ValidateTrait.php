@@ -4,7 +4,6 @@ namespace App\Controllers\Auth;
 
 trait ValidateTrait
 {
-
 	private array $registerFields = [
 		'name',
 		'email',
@@ -30,8 +29,6 @@ trait ValidateTrait
 		if ($isRegister) {
 			if ($data['password'] !== $data['password_repeat']) return false;
 		}
-
 		return $data;
 	}
-
 }

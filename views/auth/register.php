@@ -28,14 +28,42 @@
 			<form action="/register" method="POST"
 			      class="d-flex justify-content-center align-items-center flex-column gap-3">
 				<label for="name">Имя</label>
-				<input type="text" id="name" name="name" class="form-control" required>
+				<input
+						type="text"
+						id="name"
+						name="name"
+						class="form-control"
+						required
+						value="<?php echo $session->old('name') ?>"
+				>
 				<label for="email">E-mail</label>
-				<input type="text" id="email" name="email" class="form-control" required>
+				<input
+						type="text"
+						id="email"
+						name="email"
+						class="form-control"
+						required
+						value="<?php echo $session->old('email') ?>"
+				>
 				<label for="password">Пароль</label>
-				<input type="password" id="password" name="password" class="form-control" required>
+				<input
+						type="password"
+						id="password"
+						name="password"
+						class="form-control"
+						required
+						value="<?php echo $session->old('password') ?>"
+				>
 				<label for="password_repeat">Повторите пароль</label>
-				<input type="password" id="password_repeat" name="password_repeat" class="form-control" required>
-				<button class="btn btn-success">Войти</button>
+				<input
+						type="password"
+						id="password_repeat"
+						name="password_repeat"
+						class="form-control"
+						required
+						value="<?php echo $session->old('password_repeat') ?>"
+				>
+				<button class="btn btn-success">Регистрация</button>
 				<a href="/login">Назад</a>
 			</form>
 			<?php $view->component('auth.message'); ?>

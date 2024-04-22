@@ -35,4 +35,19 @@ class Session
 	{
 		session_destroy();
 	}
+
+	public function setOldValues(array $data): void
+	{
+		$_SESSION['old'] = $data;
+	}
+
+	public function old(string $field): string
+	{
+		return $_SESSION['old'][$field] ?? '';
+	}
+
+	public function resetOld(): void
+	{
+		unset($_SESSION['old']);
+	}
 }

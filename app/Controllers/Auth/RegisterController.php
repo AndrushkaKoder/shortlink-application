@@ -17,12 +17,15 @@ class RegisterController extends BaseController
 	public function register(): void
 	{
 		$data = $this->request->post();
+
 		if (!$this->validateData($data, true)) {
 			$this->session->set('error', 'Данные не верны!');
+			$this->session->setOldValues($data);
 			$this->redirect->to('/register');
 		}
 
 		if (!$this->checkUnique($data['email'])) {
+			$this->session->setOldValues($data);
 			$this->session->set('error', 'Такой пользователь уже существует!');
 			$this->redirect->to('/register');
 		}
